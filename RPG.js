@@ -4,9 +4,11 @@ let stamina = 100;
 let gold = 50;
 let level = 0;
 let currentWeapon = 0;
+let currentArmor = 0;
 let fighting;
 let monsterHealth;
-let inventory = ["stick"];
+let inventoryWeapons = ["stick"];
+let inventoryArmors = ["tattered old tunic"];
 
 const button1 = document.querySelector('#button1');
 const button2 = document.querySelector("#button2");
@@ -22,6 +24,18 @@ const monsterStats = document.querySelector("#monsterStats");
 const monsterName = document.querySelector("#monsterName");
 const monsterHealthText = document.querySelector("#monsterHealth");
 
+const weapons = [
+    { name: 'stick', power: 5 },
+    { name: 'dirk', power: 30 },
+    { name: 'sword', power: 50 },
+    { name: 'polearm', power: 100 }
+  ];
+const armors = [
+    { name: 'tattered old tunic', defence: 0 },
+    { name: 'leather armor', defence: 5 },
+    { name: 'chainmail armor', defence: 15 },
+    { name: 'platemail armor', defence: 50 }
+  ];
 const locations = [
     {
         name: "town square",
@@ -31,8 +45,8 @@ const locations = [
     },
     {
         name: "store",
-        "button text": ["Buy a weapon", "Heal up", "Gossip", "Return to town"],
-        "button functions": [buyWeapon, buyHealFull, goGossip, goTown],
+        "button text": ["Buy a weapon", "Buy armor", "Heal up", "Return to town"],
+        "button functions": [buyWeapon, buyArmor, buyHealFull, goTown],
         text: "This \"potion seller\" is more than meets the eye."
     },
     {
@@ -41,19 +55,6 @@ const locations = [
         "button functions": [fightRat, fightOgre, goTown, goWitch],
         text: "As you get farther away from town, you see in the distance evidence of strange beings."
     },
-    /*
-    {
-        name: "fight",
-        "button text": ["Attack", "Cast a spalll", "block", "Flee"],
-        "button functions": [goAttack, goSpell, goBlock, goTown],
-        text: "A ravenous beast stands before you with snarling teeth and fur standing on end."
-    }, 
-    {
-        name: "spell",
-        "button text": ["Hurl a fireball", "Heal yourself", "Go back"],
-        "button functions": [goFireBall, goHeal, goFight],
-        text: "A ravenous beast stands before you with snarling teeth and fur standing on end."
-    },*/
     {
         name: "witch",
         "button text": ["Attack", "Cast a spalll", "block", "Flee"],
@@ -90,12 +91,22 @@ function goStore() {
 }
 
 function goTrouble() {
-    update(locations[2]);
+    update(locations[2]);g
 }
 
 function goRest() {
     // sets staminText and manaText to 100 reduces goldText by 10
-       text.innerText = "You feel rested and mentally sharp.";
+    if (gold >= 10) {
+      gold -= 10;
+      stamina = 100;
+      mana = 100;
+      goldText.innerText = gold;
+      staminaText.innerText = stamina;
+      manaText.innerText = mana;
+      text.innerText = "You feel rested and mentally sharp.";
+    } else {
+        text.innerText = "You do not have enough gold to stay at the Inn.";
+      }
 }
 
 function goWitch() {
@@ -109,13 +120,76 @@ function buyHealFull() {
 }
 
 function buyWeapon() {
+    if (currentWeapon < weapons.length - 1) {
+      if (gold >= 30) {
+        gold -= 30;
+        currentWeapon++;
+        goldText.innerText = gold;
+        let newWeapon = weapons[currentWeapon].name;
+        text.innerText = "You now have a " + newWeapon + ".";
+        inventoryWeapons.push(newWeapon);
+        text.innerText += " You have: " + inventoryWeapons + inventoryArmors;
+      } else {
+        text.innerText = "You do not have enough gold to buy a new weapon.";
+      }
+    } else {
+      text.innerText = "You already have the most powerful weapon!";
+      button2.innerText = "Sell weapon for 15 gold";
+      button2.onclick = sellWeapon;
+    }
+  }
+  
+  function sellWeapon() {
+    if (inventoryWeapons.length > 1) {
+      gold += 15;
+      goldText.innerText = gold;
+      let currentWeapon = inventoryWeapons.shift();
+      text.innerText = "You sold a " + currentWeapon + ".";
+      text.innerText += " You have: " + inventoryWeapons + inventoryArmors;
+    } else {
+      text.innerText = "I don't think you want to take on the witch with your bare hands, do ya?!";
+    }
+  }
+
+
+
+  function buyArmor() {
+    if (currentArmor < armors.length - 1) {
+      if (gold >= 30) {
+        gold -= 30;
+        currentArmor++;
+        goldText.innerText = gold;
+        let newWeapon = armors[currentWeapon].name;
+        text.innerText = "You now have a " + newArmor + ".";
+        inventoryArmors.push(newArmor);
+        text.innerText += " You have: " + inventoryArmors + inventoryWeapons;
+      } else {
+        text.innerText = "You do not have enough gold to buy new armor.";
+      }
+    } else {
+      text.innerText = "You already have the strongest armor!";
+      button2.innerText = "Sell armor for 15 gold";
+      button2.onclick = sellArmor;
+    }
+  }
+  
+  function sellArmor() {
+    if (inventoryArmors.length > 1) {
+      gold += 15;
+      goldText.innerText = gold;
+      let currentArmor = inventoryArmors.shift();
+      text.innerText = "You sold a " + currentArmor + ".";
+      text.innerText += " You have: " + inventoryArmors + inventoryWeapons;
+    } else {
+      text.innerText = "Don't think you want to take on the witch with your bare hands, do ya?!";
+    }
+  }
+
+function fightRat() {
+
 }
 
-function fightRat(){
-
-}
-
-function fightOgre(){
+function fightOgre() {
   
 }
 
@@ -193,3 +267,17 @@ function goHeal() {
   button3.onclick = goTown;
   text.innerText = "A ravenous beast stands before you with snarling teeth and fur standing on end.";
 }*/
+
+/*
+    {
+        name: "fight",
+        "button text": ["Attack", "Cast a spalll", "block", "Flee"],
+        "button functions": [goAttack, goSpell, goBlock, goTown],
+        text: "A ravenous beast stands before you with snarling teeth and fur standing on end."
+    }, 
+    {
+        name: "spell",
+        "button text": ["Hurl a fireball", "Heal yourself", "Go back"],
+        "button functions": [goFireBall, goHeal, goFight],
+        text: "A ravenous beast stands before you with snarling teeth and fur standing on end."
+    },*/
