@@ -1,0 +1,90 @@
+body {
+    background-color: #13201d ;
+}
+  
+h1 {
+    font-size: xx-large;
+    color: #f1dc70;
+    text-align: center;
+}
+  
+button {
+    cursor: pointer;
+    color: #0a0a23;
+    background-color: #a232fe;
+    background-image: linear-gradient(#aaf273, #51a58f);
+    border: 2px solid #abd772;
+    border-radius: 7px;
+}
+
+#levelText {
+    position: right;
+    font-size: xx-large;
+}
+
+#stats #healthText, #manaText, #staminaText {
+    padding-right: 8px;
+}
+
+#stats {
+    display: flex;
+  justify-content: left;
+  align-items: left;
+}
+
+#xp {
+    margin-left: auto;
+    padding-left: 20px;
+}
+
+hr {
+    height: 3px;
+    background: linear-gradient(0deg, rgb(135, 86, 9), rgb(223, 152, 76));
+    filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.3));
+}
+
+#buttons {
+    display: flexbox;
+    flex-direction: row;
+    margin: 10px;
+    filter: drop-shadow(0px 2px 2px rgba(0, 0, 0, 0.4));
+}
+#monsterStats {
+    display: none;
+    border: 1px solid #0a0a23;
+    padding: 5px;
+    color: #ffffff;
+    background-color: #e84326;
+}
+  
+#game {
+    border: 3px solid #c8f170;
+    color: #ffffff;
+    max-width: 500px;
+    max-height: 400px;
+    background-color: #ffffff;
+    color: #13201d;
+    margin: 20px auto 0px;
+    padding: 10px;
+}
+  
+#text {
+    margin: 10px auto;
+    padding: auto;
+}
+
+#healthText {
+    color: rgb(242, 83, 43);
+}
+#manaText {
+    color: rgb(47, 137, 255);
+}
+#staminaText {
+    color: rgb(26, 145, 26);
+}
+#goldText {
+    color: gold;
+}
+#level {
+    text-align: center;
+}
